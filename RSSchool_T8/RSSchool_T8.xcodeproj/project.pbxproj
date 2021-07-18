@@ -11,6 +11,11 @@
 		B20603B226A3130900B19858 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B20603B126A3130900B19858 /* Assets.xcassets */; };
 		B20603B526A3130900B19858 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B20603B326A3130900B19858 /* LaunchScreen.storyboard */; };
 		B20603B826A3130900B19858 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B20603B726A3130900B19858 /* main.m */; };
+		B20603CC26A4747A00B19858 /* ArtistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B20603CB26A4747A00B19858 /* ArtistViewController.m */; };
+		B20603D026A47C4300B19858 /* RSActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B20603CF26A47C4300B19858 /* RSActionButton.m */; };
+		B20603D326A4801400B19858 /* RSCanvas.m in Sources */ = {isa = PBXBuildFile; fileRef = B20603D226A4801400B19858 /* RSCanvas.m */; };
+		B20603D626A4938300B19858 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B20603D526A4938300B19858 /* Montserrat-Regular.ttf */; };
+		B20603D826A4942900B19858 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B20603D726A4942900B19858 /* Montserrat-Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +26,14 @@
 		B20603B426A3130900B19858 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B20603B626A3130900B19858 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B20603B726A3130900B19858 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B20603CA26A4747A00B19858 /* ArtistViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArtistViewController.h; sourceTree = "<group>"; };
+		B20603CB26A4747A00B19858 /* ArtistViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArtistViewController.m; sourceTree = "<group>"; };
+		B20603CE26A47C4300B19858 /* RSActionButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSActionButton.h; sourceTree = "<group>"; };
+		B20603CF26A47C4300B19858 /* RSActionButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSActionButton.m; sourceTree = "<group>"; };
+		B20603D126A4801400B19858 /* RSCanvas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSCanvas.h; sourceTree = "<group>"; };
+		B20603D226A4801400B19858 /* RSCanvas.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSCanvas.m; sourceTree = "<group>"; };
+		B20603D526A4938300B19858 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		B20603D726A4942900B19858 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,14 +66,46 @@
 		B20603A426A3130800B19858 /* RSSchool_T8 */ = {
 			isa = PBXGroup;
 			children = (
+				B20603CD26A47BB800B19858 /* Views */,
+				B20603C926A31CAD00B19858 /* Controllers */,
 				B20603A526A3130800B19858 /* AppDelegate.h */,
 				B20603A626A3130800B19858 /* AppDelegate.m */,
 				B20603B126A3130900B19858 /* Assets.xcassets */,
 				B20603B326A3130900B19858 /* LaunchScreen.storyboard */,
 				B20603B626A3130900B19858 /* Info.plist */,
 				B20603B726A3130900B19858 /* main.m */,
+				B20603D426A4936D00B19858 /* Fonts */,
 			);
 			path = RSSchool_T8;
+			sourceTree = "<group>";
+		};
+		B20603C926A31CAD00B19858 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B20603CA26A4747A00B19858 /* ArtistViewController.h */,
+				B20603CB26A4747A00B19858 /* ArtistViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		B20603CD26A47BB800B19858 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B20603CE26A47C4300B19858 /* RSActionButton.h */,
+				B20603CF26A47C4300B19858 /* RSActionButton.m */,
+				B20603D126A4801400B19858 /* RSCanvas.h */,
+				B20603D226A4801400B19858 /* RSCanvas.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B20603D426A4936D00B19858 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				B20603D726A4942900B19858 /* Montserrat-Medium.ttf */,
+				B20603D526A4938300B19858 /* Montserrat-Regular.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,7 +164,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B20603D626A4938300B19858 /* Montserrat-Regular.ttf in Resources */,
 				B20603B526A3130900B19858 /* LaunchScreen.storyboard in Resources */,
+				B20603D826A4942900B19858 /* Montserrat-Medium.ttf in Resources */,
 				B20603B226A3130900B19858 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -131,7 +178,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B20603D326A4801400B19858 /* RSCanvas.m in Sources */,
 				B20603A726A3130800B19858 /* AppDelegate.m in Sources */,
+				B20603CC26A4747A00B19858 /* ArtistViewController.m in Sources */,
+				B20603D026A47C4300B19858 /* RSActionButton.m in Sources */,
 				B20603B826A3130900B19858 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
