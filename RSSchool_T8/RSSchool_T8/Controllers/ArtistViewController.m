@@ -8,9 +8,9 @@
 #import "ArtistViewController.h"
 #import "RSCanvas.h"
 #import "RSActionButton.h"
+#import "PaletteViewController.h"
 
 @interface ArtistViewController ()
-
 
 @property (nonatomic, strong) RSCanvas *canvas;
 @property (nonatomic, strong) RSActionButton *openPaletteButton;
@@ -18,10 +18,13 @@
 @property (nonatomic, strong) RSActionButton *drawButton;
 @property (nonatomic, strong) RSActionButton *shareButton;
 
+@property (nonatomic, strong) PaletteViewController *paletteViewController;
+
 @end
 
 @implementation ArtistViewController
 
+// MARK: - VC delegates
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	[self initStyle];
@@ -37,6 +40,8 @@
 	self.view.backgroundColor = UIColor.whiteColor;
 }
 
+
+// MARK: - Navigation item
 - (void)setupNavigationItem {
 	UIFont *barFont = [UIFont fontWithName:@"Montserrat-Medium" size:17];
 	
@@ -52,6 +57,13 @@
 	self.navigationItem.rightBarButtonItem = next;
 }
 
+- (void)openDrawings:(id)sender {
+	UIViewController *drawingsVC = [UIViewController new];
+	[self.navigationController pushViewController:drawingsVC animated:YES];
+}
+
+
+// MARK: - Contents
 - (void)setupViews {
 	// canvas
 	_canvas = [[RSCanvas alloc] initWithFrame:CGRectMake(38, 104, 300, 300)];
@@ -86,21 +98,48 @@
 	self.shareButton = button;
 }
 
-- (void)openPaletteTapped:(UIButton *)sender {
+- (void)showChildViewController:(UIViewController *)vc {
+	[self addChildViewController:vc];
+	[self.view addSubview:vc.view];
+	[vc didMoveToParentViewController:self];
 }
 
+- (void)hideChildViewController:(UIViewController *)vc {
+	[vc willMoveToParentViewController:nil];
+	[vc.view removeFromSuperview];
+	[vc removeFromParentViewController];
+}
+
+// MARK: Palette
+- (void)openPaletteTapped:(UIButton *)sender {
+	if (!self.paletteViewController) {
+		self.paletteViewController = [[PaletteViewController alloc] init];
+		[self.paletteViewController addOnSaveTarget:self action:@selector(onPaletteSaved)];
+		CGFloat childHeight = 333.5;
+		CGRect childFrame = CGRectMake(0.0,
+						self.view.bounds.size.height - childHeight,
+						self.view.bounds.size.width,
+						childHeight);
+		self.paletteViewController.view.frame = childFrame;
+	}
+	
+	[self showChildViewController:self.paletteViewController];
+}
+
+- (void)onPaletteSaved {
+	[self hideChildViewController: self.paletteViewController];
+}
+
+// MARK: Timer
 - (void)openTimerTapped:(UIButton *)sender {
 }
 
+// MARK: Draw
 - (void)drawButtonTapped:(UIButton *)sender {
 }
 
+// MARK: Share
 - (void)shareButtonTapped:(UIButton *)sender {
-}
-
-- (void)openDrawings:(id)sender {
-	UIViewController *drawingsVC = [UIViewController new];
-	[self.navigationController pushViewController:drawingsVC animated:YES];
 }
 
 @end

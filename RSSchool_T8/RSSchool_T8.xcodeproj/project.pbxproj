@@ -16,6 +16,9 @@
 		B20603D326A4801400B19858 /* RSCanvas.m in Sources */ = {isa = PBXBuildFile; fileRef = B20603D226A4801400B19858 /* RSCanvas.m */; };
 		B20603D626A4938300B19858 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B20603D526A4938300B19858 /* Montserrat-Regular.ttf */; };
 		B20603D826A4942900B19858 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B20603D726A4942900B19858 /* Montserrat-Medium.ttf */; };
+		B20603DB26A4A94A00B19858 /* PaletteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B20603DA26A4A94A00B19858 /* PaletteViewController.m */; };
+		B20603DF26A4AEE800B19858 /* UIColor+Palette.m in Sources */ = {isa = PBXBuildFile; fileRef = B20603DE26A4AEE800B19858 /* UIColor+Palette.m */; };
+		B20603E226A4CB6700B19858 /* RSPaletteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B20603E126A4CB6700B19858 /* RSPaletteButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +37,12 @@
 		B20603D226A4801400B19858 /* RSCanvas.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSCanvas.m; sourceTree = "<group>"; };
 		B20603D526A4938300B19858 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		B20603D726A4942900B19858 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
+		B20603D926A4A94A00B19858 /* PaletteViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaletteViewController.h; sourceTree = "<group>"; };
+		B20603DA26A4A94A00B19858 /* PaletteViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaletteViewController.m; sourceTree = "<group>"; };
+		B20603DD26A4AEE800B19858 /* UIColor+Palette.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Palette.h"; sourceTree = "<group>"; };
+		B20603DE26A4AEE800B19858 /* UIColor+Palette.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Palette.m"; sourceTree = "<group>"; };
+		B20603E026A4CB6700B19858 /* RSPaletteButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSPaletteButton.h; sourceTree = "<group>"; };
+		B20603E126A4CB6700B19858 /* RSPaletteButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSPaletteButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +83,7 @@
 				B20603B326A3130900B19858 /* LaunchScreen.storyboard */,
 				B20603B626A3130900B19858 /* Info.plist */,
 				B20603B726A3130900B19858 /* main.m */,
+				B20603DC26A4AE7C00B19858 /* Extensions */,
 				B20603D426A4936D00B19858 /* Fonts */,
 			);
 			path = RSSchool_T8;
@@ -84,6 +94,8 @@
 			children = (
 				B20603CA26A4747A00B19858 /* ArtistViewController.h */,
 				B20603CB26A4747A00B19858 /* ArtistViewController.m */,
+				B20603D926A4A94A00B19858 /* PaletteViewController.h */,
+				B20603DA26A4A94A00B19858 /* PaletteViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -91,10 +103,12 @@
 		B20603CD26A47BB800B19858 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B20603CE26A47C4300B19858 /* RSActionButton.h */,
-				B20603CF26A47C4300B19858 /* RSActionButton.m */,
 				B20603D126A4801400B19858 /* RSCanvas.h */,
 				B20603D226A4801400B19858 /* RSCanvas.m */,
+				B20603CE26A47C4300B19858 /* RSActionButton.h */,
+				B20603CF26A47C4300B19858 /* RSActionButton.m */,
+				B20603E026A4CB6700B19858 /* RSPaletteButton.h */,
+				B20603E126A4CB6700B19858 /* RSPaletteButton.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -106,6 +120,15 @@
 				B20603D526A4938300B19858 /* Montserrat-Regular.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		B20603DC26A4AE7C00B19858 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B20603DD26A4AEE800B19858 /* UIColor+Palette.h */,
+				B20603DE26A4AEE800B19858 /* UIColor+Palette.m */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -178,8 +201,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B20603DB26A4A94A00B19858 /* PaletteViewController.m in Sources */,
+				B20603DF26A4AEE800B19858 /* UIColor+Palette.m in Sources */,
 				B20603D326A4801400B19858 /* RSCanvas.m in Sources */,
 				B20603A726A3130800B19858 /* AppDelegate.m in Sources */,
+				B20603E226A4CB6700B19858 /* RSPaletteButton.m in Sources */,
 				B20603CC26A4747A00B19858 /* ArtistViewController.m in Sources */,
 				B20603D026A47C4300B19858 /* RSActionButton.m in Sources */,
 				B20603B826A3130900B19858 /* main.m in Sources */,
