@@ -6,6 +6,7 @@
 //
 
 #import "RSActionButton.h"
+#import "UIColor+Palette.h"
 
 @implementation RSActionButton
 
@@ -35,14 +36,15 @@
 
 - (void)initStyle {
 	UIColor *fillColor   = UIColor.whiteColor;
-	UIColor *accentColor = [UIColor colorNamed:@"lightGreenSea"];
-	UIColor *shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.25];
+	UIColor *accentColor = UIColor.lightGreenSea;
+	UIColor *shadowColor = UIColor.defaultShadow;
 	[self setBackgroundColor:fillColor];
 	[self setTitleColor:accentColor forState:UIControlStateNormal];
+	self.contentEdgeInsets = UIEdgeInsetsMake(5, 21, 5, 21);
 
 	self.layer.cornerRadius = 10;
 	self.layer.shadowRadius = 1;
-	self.layer.shadowOffset = CGSizeMake(0, 0);
+	self.layer.shadowOffset = CGSizeZero;
 	self.layer.shadowOpacity = 1.0;
 	self.layer.shadowColor = shadowColor.CGColor;
 	
@@ -53,8 +55,8 @@
 	[super setHighlighted:highlighted];
 	
 	
-	UIColor *shadowColor = highlighted ? [UIColor colorNamed:@"lightGreenSea"]
-									   : [UIColor colorWithRed:0 green:0 blue:0 alpha:0.25];
+	UIColor *shadowColor = highlighted ? UIColor.highlightedShadow
+									   : UIColor.defaultShadow;
 	
 	self.layer.shadowColor = shadowColor.CGColor;
 	self.layer.shadowRadius = highlighted ? 2 : 1;
