@@ -22,6 +22,7 @@
 		B20603E626A5658C00B19858 /* RSDrawData.m in Sources */ = {isa = PBXBuildFile; fileRef = B20603E526A5658C00B19858 /* RSDrawData.m */; };
 		B20603E926A56B9500B19858 /* NSMutableArray+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = B20603E826A56B9500B19858 /* NSMutableArray+Extensions.m */; };
 		B20603FD26A5F76200B19858 /* DrawingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20603FC26A5F76200B19858 /* DrawingsViewController.swift */; };
+		B20603FF26A61BB600B19858 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20603FE26A61BB600B19858 /* TimerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		B20603E826A56B9500B19858 /* NSMutableArray+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Extensions.m"; sourceTree = "<group>"; };
 		B20603FB26A5F76100B19858 /* RSSchool_T8-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RSSchool_T8-Bridging-Header.h"; sourceTree = "<group>"; };
 		B20603FC26A5F76200B19858 /* DrawingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingsViewController.swift; sourceTree = "<group>"; };
+		B20603FE26A61BB600B19858 /* TimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				B20603D926A4A94A00B19858 /* PaletteViewController.h */,
 				B20603DA26A4A94A00B19858 /* PaletteViewController.m */,
 				B20603FC26A5F76200B19858 /* DrawingsViewController.swift */,
+				B20603FE26A61BB600B19858 /* TimerViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 				B20603E926A56B9500B19858 /* NSMutableArray+Extensions.m in Sources */,
 				B20603DF26A4AEE800B19858 /* UIColor+Palette.m in Sources */,
 				B20603E626A5658C00B19858 /* RSDrawData.m in Sources */,
+				B20603FF26A61BB600B19858 /* TimerViewController.swift in Sources */,
 				B20603FD26A5F76200B19858 /* DrawingsViewController.swift in Sources */,
 				B20603D326A4801400B19858 /* RSCanvas.m in Sources */,
 				B20603A726A3130800B19858 /* AppDelegate.m in Sources */,

@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger, ArtistViewControllerStatus) {
 @property (nonatomic, strong) RSActionButton *shareButton;
 
 @property (nonatomic, strong) PaletteViewController *paletteViewController;
+@property (nonatomic, strong) TimerViewController *timerViewController;
 @property (nonatomic, strong) DrawingsViewController *drawingsViewController;
 
 @end
@@ -43,6 +44,9 @@ typedef NS_ENUM(NSInteger, ArtistViewControllerStatus) {
 	
 	self.paletteViewController = [[PaletteViewController alloc] init];
 	[self.paletteViewController addOnSaveTarget:self action:@selector(onPaletteSaved)];
+	
+	self.timerViewController = [[TimerViewController alloc] init];
+	[self.timerViewController addOnSaveWithTarget:self action:@selector(onTimerSaved)];
 	
 	self.drawingsViewController = [DrawingsViewController new];
 	self.drawingsViewController.selectedDataUID = RSDrawData.head.uid;
@@ -184,6 +188,18 @@ typedef NS_ENUM(NSInteger, ArtistViewControllerStatus) {
 
 // MARK: Timer
 - (void)openTimerTapped:(UIButton *)sender {
+	CGFloat childHeight = 333.5;
+	CGRect childFrame = CGRectMake(0.0,
+					self.view.bounds.size.height - childHeight,
+					self.view.bounds.size.width,
+					childHeight);
+	self.timerViewController.view.frame = childFrame;
+	
+	[self showChildViewController:self.timerViewController];
+}
+
+- (void)onTimerSaved {
+	[self hideChildViewController: self.timerViewController];
 }
 
 // MARK: Draw
