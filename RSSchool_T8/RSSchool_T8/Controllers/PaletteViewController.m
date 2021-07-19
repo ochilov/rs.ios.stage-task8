@@ -13,7 +13,8 @@
 
 @interface PaletteViewController () {
 	NSTimer *highlightTimer;
-	NSMutableArray<UIColor *> *_colorsSet;
+	NSInteger _pressedPaletteButtonsCount;
+	NSMutableArray<RSPaletteButton *> *_pressedPaletteButtons;
 	
 	id onSaveTarget;
 	SEL onSaveAction;
@@ -27,12 +28,13 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	[self initStyle];
-	_colorsSet = [[NSMutableArray alloc] initWithCapacity:4];
+	[self setupViews];
+	_pressedPaletteButtonsCount = 3;
+	_pressedPaletteButtons = [NSMutableArray arrayWithCapacity:_pressedPaletteButtonsCount];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	[self setupViews];
 }
 
 - (void)initStyle {
@@ -108,23 +110,18 @@
 	}
 }
 
-- (void)paletteButtonTapped:(RSPaletteButton *)sender {
-	UIColor *selectedColor = sender.color;
-	// if selected color is exists in colorsSet - exclude this color
-	NSInteger index = [_colorsSet indexOfObject:selectedColor];
-	if (index != NSNotFound) {
-		[_colorsSet removeObjectAtIndex:index];
+- (void)paletteButtonTapped:(RSPaletteButton *)button {
+	// if deselected = remove from buffer
+	if (!button.isSelected) {
+		[self removeFromPressed:button];
 		return;
 	}
 	
-	// add to stack
-	[_colorsSet addObject:selectedColor];
-	if (_colorsSet.count > 3) {
-		[_colorsSet removeObjectAtIndex:0];
-	}
+	// add to buffer
+	[self addToPressed:button];
 	
 	// highlight the color
-	self.view.backgroundColor = selectedColor;
+	self.view.backgroundColor = button.color;
 	[self.view setNeedsDisplay];
 	if (highlightTimer) {
 		[highlightTimer invalidate];
@@ -132,19 +129,35 @@
 	highlightTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(resetPaletteHighlighted) userInfo:nil repeats:NO];
 }
 
+- (void)removeFromPressed:(RSPaletteButton *)button {
+	[_pressedPaletteButtons removeObject:button];
+}
+
+- (void)addToPressed:(RSPaletteButton *)button {
+	if (_pressedPaletteButtons.count < _pressedPaletteButtonsCount) {
+		[_pressedPaletteButtons addObject:button];
+		return;
+	}
+	
+	RSPaletteButton *firstbutton = _pressedPaletteButtons.firstObject;
+	[firstbutton setSelected:NO];
+	for (NSInteger i = 1; i < _pressedPaletteButtons.count; i++) {
+		_pressedPaletteButtons[i-1] = _pressedPaletteButtons[i];
+	}
+	_pressedPaletteButtons[_pressedPaletteButtonsCount-1] = button;
+}
+
 - (void)resetPaletteHighlighted {
 	self.view.backgroundColor = UIColor.whiteColor;
 	[self.view setNeedsDisplay];
 }
 
-
 - (NSArray*)colorsSet {
 	UIColor *defaultColor = UIColor.blackColor;
-	if (!_colorsSet) {
-		return @[defaultColor, defaultColor, defaultColor];
-	}
-	while (_colorsSet.count < 3) {
-		[_colorsSet addObject:defaultColor];
+	NSMutableArray *_colorsSet = [NSMutableArray arrayWithArray:@[defaultColor, defaultColor, defaultColor]];
+	NSInteger index = 0;
+	for (RSPaletteButton *button in _pressedPaletteButtons) {
+		_colorsSet[index++] = button.color;
 	}
 	[_colorsSet shuffle];
 	return _colorsSet.copy;

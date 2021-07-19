@@ -10,7 +10,7 @@
 
 @interface RSPaletteButton() {
 	CAShapeLayer *colorLayer;
-	CAShapeLayer *colorLayerHighlighted;
+	CAShapeLayer *colorLayerSelected;
 }
 @end
 
@@ -21,6 +21,7 @@
 	if (self) {
 		_color = color;
 		[self initStyle];
+		[self addTarget:self action:@selector(onTapped:) forControlEvents:UIControlEventTouchUpInside];
 	}
 	return self;
 }
@@ -39,17 +40,27 @@
 	[colorLayer setHidden:NO];
 	[self.layer addSublayer:colorLayer];
 	
-	colorLayerHighlighted = [self layerWithScale:0.9];
-	colorLayerHighlighted.fillColor = self.color.CGColor;
-	[colorLayerHighlighted setHidden:YES];
-	[self.layer addSublayer:colorLayerHighlighted];
+	colorLayerSelected = [self layerWithScale:0.9];
+	colorLayerSelected.fillColor = self.color.CGColor;
+	[colorLayerSelected setHidden:YES];
+	[self.layer addSublayer:colorLayerSelected];
+}
+
+- (void)onTapped:(RSPaletteButton *)sender {
+	[self setSelected:!self.isSelected];
+}
+
+- (void)setSelected:(BOOL)selected {
+	[super setSelected:selected];
+	
+	colorLayer.hidden = selected;
+	colorLayerSelected.hidden = !selected;
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
 	[super setHighlighted:highlighted];
-	
-	colorLayer.hidden = highlighted;
-	colorLayerHighlighted.hidden = !highlighted;
+		
+	self.layer.shadowColor = (highlighted ? UIColor.highlightedShadow : UIColor.defaultShadow).CGColor;
 }
 
 - (void)setEnabled:(BOOL)enabled {
