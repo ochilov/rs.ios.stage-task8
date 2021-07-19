@@ -10,6 +10,7 @@
 #import "RSCanvas.h"
 #import "RSActionButton.h"
 #import "PaletteViewController.h"
+#import "RSSchool_T8-Swift.h"
 
 typedef NS_ENUM(NSInteger, ArtistViewControllerStatus) {
 	ArtistViewControllerIdle,
@@ -27,6 +28,7 @@ typedef NS_ENUM(NSInteger, ArtistViewControllerStatus) {
 @property (nonatomic, strong) RSActionButton *shareButton;
 
 @property (nonatomic, strong) PaletteViewController *paletteViewController;
+@property (nonatomic, strong) DrawingsViewController *drawingsViewController;
 
 @end
 
@@ -37,11 +39,18 @@ typedef NS_ENUM(NSInteger, ArtistViewControllerStatus) {
 	[super viewDidLoad];
 	[self initStyle];
 	[self setupNavigationItem];
+	[self setupViews];
+	
+	self.paletteViewController = [[PaletteViewController alloc] init];
+	[self.paletteViewController addOnSaveTarget:self action:@selector(onPaletteSaved)];
+	
+	self.drawingsViewController = [DrawingsViewController new];
+	self.drawingsViewController.selectedDataUID = RSDrawData.head.uid;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	[self setupViews];
+	[self setStatus: ArtistViewControllerIdle];
 }
 
 - (void)initStyle {
@@ -66,8 +75,7 @@ typedef NS_ENUM(NSInteger, ArtistViewControllerStatus) {
 }
 
 - (void)openDrawings:(id)sender {
-	UIViewController *drawingsVC = [UIViewController new];
-	[self.navigationController pushViewController:drawingsVC animated:YES];
+	[self.navigationController pushViewController:self.drawingsViewController animated:YES];
 }
 
 
@@ -83,8 +91,6 @@ typedef NS_ENUM(NSInteger, ArtistViewControllerStatus) {
 	[button addTarget:self action:@selector(openPaletteTapped:) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:button];
 	self.openPaletteButton = button;
-	self.paletteViewController = [[PaletteViewController alloc] init];
-	[self.paletteViewController addOnSaveTarget:self action:@selector(onPaletteSaved)];
 	
 	// openTimer
 	button = [[RSActionButton alloc] initWithFrame:CGRectMake(20, 506, 151, 32)];
@@ -182,7 +188,7 @@ typedef NS_ENUM(NSInteger, ArtistViewControllerStatus) {
 
 // MARK: Draw
 - (void)drawButtonTapped:(UIButton *)sender {
-	self.canvas.drawData = RSDrawData.planet;
+	self.canvas.drawData = [RSDrawData dataByID:self.drawingsViewController.selectedDataUID];
 	self.canvas.drawColorsSet = self.paletteViewController.colorsSet;
 	
 	[self setStatus:ArtistViewControllerDraw];

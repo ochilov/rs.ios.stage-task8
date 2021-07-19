@@ -52,6 +52,20 @@
 	return _path;
 }
 
+
++ (NSArray<RSDrawData *> *)allData {
+	return @[ self.planet, self.head, self.tree, self.landscape ];
+}
+
++ (instancetype)dataByID:(NSInteger)uid {
+	for (RSDrawData *item in self.allData) {
+		if (uid == item.uid) {
+			return item;
+		}
+	}
+	return nil;
+}
+
 // MARK: - Head template
 + (instancetype)head {
 	static RSDrawData *headInstance = nil;
@@ -59,6 +73,8 @@
 	dispatch_once(&onceToken, ^{
 		headInstance = [RSDrawData new];
 		RSDrawData *data = headInstance;
+		data.uid = 1;
+		data.name = @"Head";
 		
 		//
 		UIBezierPath* bezierPath = [UIBezierPath bezierPath];
@@ -186,6 +202,8 @@
 	dispatch_once(&onceToken, ^{
 		treeInstance = [RSDrawData new];
 		RSDrawData *data = treeInstance;
+		data.uid = 2;
+		data.name = @"Tree";
 		
 		//
 		UIBezierPath* bezierPath = [UIBezierPath bezierPath];
@@ -295,6 +313,8 @@
 	dispatch_once(&onceToken, ^{
 		landscapeInstance = [RSDrawData new];
 		RSDrawData *data = landscapeInstance;
+		data.uid = 3;
+		data.name = @"Landscape";
 
 		//
 		UIBezierPath* bezierPath = [UIBezierPath bezierPath];
@@ -636,6 +656,8 @@
 	dispatch_once(&onceToken, ^{
 		planetInstance = [RSDrawData new];
 		RSDrawData *data = planetInstance;
+		data.uid = 4;
+		data.name = @"Planet";
 		
 		//
 		UIBezierPath* bezierPath = [UIBezierPath bezierPath];

@@ -53,13 +53,24 @@
 
 - (void)setHighlighted:(BOOL)highlighted {
 	[super setHighlighted:highlighted];
-	
+	if (self.isSelected) {
+		return;
+	}
 	
 	UIColor *shadowColor = highlighted ? UIColor.highlightedShadow
 									   : UIColor.defaultShadow;
 	
 	self.layer.shadowColor = shadowColor.CGColor;
 	self.layer.shadowRadius = highlighted ? 2 : 1;
+}
+
+- (void)setSelected:(BOOL)selected {
+	[super setSelected:selected];
+	
+	UIColor *shadowColor = selected ? UIColor.highlightedShadow
+									   : UIColor.defaultShadow;
+	self.layer.shadowColor = shadowColor.CGColor;
+	self.layer.shadowRadius = selected ? 2 : 1;
 }
 
 - (void)setEnabled:(BOOL)enabled {

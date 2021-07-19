@@ -22,8 +22,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 // MARK: -
 @interface RSDrawData : NSObject
+@property (nonatomic) NSInteger uid;
+@property (nonatomic, strong) NSString *name;
+
 - (NSArray *)pathes;
 - (RSDrawDataPath *)addPath:(UIBezierPath *)path;
+
++ (NSArray<RSDrawData *> *)allData;
++ (instancetype)dataByID:(NSInteger)uid;
 
 + (instancetype)head;
 + (instancetype)tree;
