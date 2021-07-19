@@ -11,6 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RSCanvas : UIView
 
+- (NSData *)getPNG;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -6,6 +6,7 @@
 //
 
 #import "AppDelegate.h"
+#import "UIColor+Palette.h"
 #import "Controllers/ArtistViewController.h"
 
 @interface AppDelegate ()
@@ -18,7 +19,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	UIWindow *window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
 	window.rootViewController = [self rootViewController];
-	
+	window.tintColor = UIColor.lightGreenSea;
 	self.window = window;
 	[self.window makeKeyAndVisible];
 	return YES;
@@ -29,7 +30,7 @@
 	UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:[ArtistViewController new]];
 	
 	// init bar style
-	navigation.navigationBar.tintColor = [UIColor colorNamed:@"lightGreenSea"];
+	navigation.navigationBar.tintColor = UIColor.lightGreenSea;
 	[navigation.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
 	navigation.navigationBar.backgroundColor = UIColor.whiteColor;
 	navigation.navigationBar.layer.shadowOffset = CGSizeMake(0, 0.5);

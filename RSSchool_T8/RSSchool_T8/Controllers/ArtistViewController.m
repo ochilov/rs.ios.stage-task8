@@ -140,6 +140,11 @@
 
 // MARK: Share
 - (void)shareButtonTapped:(UIButton *)sender {
+	NSData *png = [self.canvas getPNG];
+	if (png) {
+		UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[png] applicationActivities:nil];
+		[self presentViewController:activityVC animated:YES completion:^{}];
+	}
 }
 
 @end

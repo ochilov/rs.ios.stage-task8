@@ -6,6 +6,7 @@
 //
 
 #import "RSCanvas.h"
+#include "UIColor+Palette.h"
 
 @implementation RSCanvas
 
@@ -33,17 +34,22 @@
 	return self;
 }
 
+- (NSData *)getPNG {
+	UIGraphicsImageRenderer *imageRenderer = [[UIGraphicsImageRenderer alloc] initWithSize:self.bounds.size
+																					format:UIGraphicsImageRendererFormat.preferredFormat];
+	NSData *png = [imageRenderer PNGDataWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
+		[self.layer renderInContext:rendererContext.CGContext];
+	}];
+	return png;
+}
+
 - (void)initStyle {
-	UIColor *fillColor   = UIColor.whiteColor;
-	UIColor *accentColor = [UIColor colorNamed:@"chillSky"];
-	UIColor *shadowColor = [accentColor colorWithAlphaComponent:0.25];
-	
-	self.backgroundColor = fillColor;
+	self.backgroundColor = UIColor.whiteColor;
 	self.layer.cornerRadius = 8;
 	self.layer.shadowRadius = 4;
-	self.layer.shadowOffset = CGSizeMake(0, 0);
-	self.layer.shadowOpacity = 1.0;
-	self.layer.shadowColor = shadowColor.CGColor;
+	self.layer.shadowOffset =  CGSizeZero;
+	self.layer.shadowOpacity = 0.25;
+	self.layer.shadowColor = UIColor.chillSky.CGColor;
 }
 
 @end
