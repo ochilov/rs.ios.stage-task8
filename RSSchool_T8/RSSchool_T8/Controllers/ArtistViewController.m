@@ -6,9 +6,16 @@
 //
 
 #import "ArtistViewController.h"
+#import "UIColor+Palette.h"
 #import "RSCanvas.h"
 #import "RSActionButton.h"
 #import "PaletteViewController.h"
+
+typedef NS_ENUM(NSInteger, ArtistViewControllerStatus) {
+	ArtistViewControllerIdle,
+	ArtistViewControllerDraw,
+	ArtistViewControllerDone
+};
 
 @interface ArtistViewController ()
 
@@ -16,6 +23,7 @@
 @property (nonatomic, strong) RSActionButton *openPaletteButton;
 @property (nonatomic, strong) RSActionButton *openTimerButton;
 @property (nonatomic, strong) RSActionButton *drawButton;
+@property (nonatomic, strong) RSActionButton *resetDrawButton;
 @property (nonatomic, strong) RSActionButton *shareButton;
 
 @property (nonatomic, strong) PaletteViewController *paletteViewController;
@@ -75,6 +83,8 @@
 	[button addTarget:self action:@selector(openPaletteTapped:) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:button];
 	self.openPaletteButton = button;
+	self.paletteViewController = [[PaletteViewController alloc] init];
+	[self.paletteViewController addOnSaveTarget:self action:@selector(onPaletteSaved)];
 	
 	// openTimer
 	button = [[RSActionButton alloc] initWithFrame:CGRectMake(20, 506, 151, 32)];
@@ -90,12 +100,21 @@
 	[self.view addSubview:button];
 	self.drawButton = button;
 	
+	// reset
+	button = [[RSActionButton alloc] initWithFrame:CGRectMake(233, 454, 101, 32)];
+	[button setTitle:@"Reset" forState:UIControlStateNormal];
+	[button addTarget:self action:@selector(resetDrawTapped:) forControlEvents:UIControlEventTouchUpInside];
+	[self.view addSubview:button];
+	self.resetDrawButton = button;
+	
 	// share
 	button = [[RSActionButton alloc] initWithFrame:CGRectMake(239, 506, 95, 32)];
 	[button setTitle:@"Share" forState:UIControlStateNormal];
 	[button addTarget:self action:@selector(shareButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:button];
 	self.shareButton = button;
+	
+	[self setStatus: ArtistViewControllerIdle];
 }
 
 - (void)showChildViewController:(UIViewController *)vc {
@@ -110,18 +129,45 @@
 	[vc removeFromParentViewController];
 }
 
+- (void)setStatus:(ArtistViewControllerStatus)status {
+	switch(status) {
+		case ArtistViewControllerIdle: {
+			[self.canvas resetView];
+			self.openPaletteButton.enabled = YES;
+			self.openTimerButton.enabled = YES;
+			self.drawButton.enabled = YES;
+			self.drawButton.hidden = NO;
+			self.resetDrawButton.hidden = YES;
+			self.shareButton.enabled = NO;
+			break;
+		}
+		case ArtistViewControllerDraw: {
+			self.openPaletteButton.enabled = NO;
+			self.openTimerButton.enabled = NO;
+			self.drawButton.enabled = NO;
+			self.resetDrawButton.hidden = YES;
+			self.shareButton.enabled = NO;
+			break;
+		}
+		case ArtistViewControllerDone: {
+			self.openPaletteButton.enabled = NO;
+			self.openTimerButton.enabled = NO;
+			self.drawButton.hidden = YES;
+			self.resetDrawButton.hidden = NO;
+			self.shareButton.enabled = YES;
+			break;
+		}
+	}
+}
+
 // MARK: Palette
 - (void)openPaletteTapped:(UIButton *)sender {
-	if (!self.paletteViewController) {
-		self.paletteViewController = [[PaletteViewController alloc] init];
-		[self.paletteViewController addOnSaveTarget:self action:@selector(onPaletteSaved)];
-		CGFloat childHeight = 333.5;
-		CGRect childFrame = CGRectMake(0.0,
-						self.view.bounds.size.height - childHeight,
-						self.view.bounds.size.width,
-						childHeight);
-		self.paletteViewController.view.frame = childFrame;
-	}
+	CGFloat childHeight = 333.5;
+	CGRect childFrame = CGRectMake(0.0,
+					self.view.bounds.size.height - childHeight,
+					self.view.bounds.size.width,
+					childHeight);
+	self.paletteViewController.view.frame = childFrame;
 	
 	[self showChildViewController:self.paletteViewController];
 }
@@ -136,6 +182,23 @@
 
 // MARK: Draw
 - (void)drawButtonTapped:(UIButton *)sender {
+	self.canvas.drawData = RSDrawData.planet;
+	self.canvas.drawColorsSet = self.paletteViewController.colorsSet;
+	
+	[self setStatus:ArtistViewControllerDraw];
+	
+	__weak typeof(self) weakSelf = self;
+	[self.canvas startAnimatedDrawWithDuration: 1 complete:^{
+		[weakSelf drawDidEnd];
+	}];
+}
+
+- (void)drawDidEnd {
+	[self setStatus:ArtistViewControllerDone];
+}
+
+- (void)resetDrawTapped:(UIButton *)sender {
+	[self setStatus:ArtistViewControllerIdle];
 }
 
 // MARK: Share

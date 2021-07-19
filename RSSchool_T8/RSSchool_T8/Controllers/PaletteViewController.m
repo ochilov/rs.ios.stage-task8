@@ -7,6 +7,7 @@
 
 #import "PaletteViewController.h"
 #import "UIColor+Palette.h"
+#import "NSMutableArray+Extensions.h"
 #import "RSActionButton.h"
 #import "RSPaletteButton.h"
 
@@ -101,7 +102,9 @@
 
 - (void)saveButtonTapped:(UIButton *)sender {
 	if (onSaveTarget && onSaveAction) {
-		[onSaveTarget performSelector:onSaveAction];
+		IMP imp = [onSaveTarget methodForSelector:onSaveAction];
+		void (*func)(id, SEL) = (void *)imp;
+		func(onSaveTarget, onSaveAction);
 	}
 }
 
@@ -136,6 +139,14 @@
 
 
 - (NSArray*)colorsSet {
+	UIColor *defaultColor = UIColor.blackColor;
+	if (!_colorsSet) {
+		return @[defaultColor, defaultColor, defaultColor];
+	}
+	while (_colorsSet.count < 3) {
+		[_colorsSet addObject:defaultColor];
+	}
+	[_colorsSet shuffle];
 	return _colorsSet.copy;
 }
 

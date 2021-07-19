@@ -19,6 +19,8 @@
 		B20603DB26A4A94A00B19858 /* PaletteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B20603DA26A4A94A00B19858 /* PaletteViewController.m */; };
 		B20603DF26A4AEE800B19858 /* UIColor+Palette.m in Sources */ = {isa = PBXBuildFile; fileRef = B20603DE26A4AEE800B19858 /* UIColor+Palette.m */; };
 		B20603E226A4CB6700B19858 /* RSPaletteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B20603E126A4CB6700B19858 /* RSPaletteButton.m */; };
+		B20603E626A5658C00B19858 /* RSDrawData.m in Sources */ = {isa = PBXBuildFile; fileRef = B20603E526A5658C00B19858 /* RSDrawData.m */; };
+		B20603E926A56B9500B19858 /* NSMutableArray+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = B20603E826A56B9500B19858 /* NSMutableArray+Extensions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,10 @@
 		B20603DE26A4AEE800B19858 /* UIColor+Palette.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Palette.m"; sourceTree = "<group>"; };
 		B20603E026A4CB6700B19858 /* RSPaletteButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSPaletteButton.h; sourceTree = "<group>"; };
 		B20603E126A4CB6700B19858 /* RSPaletteButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSPaletteButton.m; sourceTree = "<group>"; };
+		B20603E426A5658C00B19858 /* RSDrawData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDrawData.h; sourceTree = "<group>"; };
+		B20603E526A5658C00B19858 /* RSDrawData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDrawData.m; sourceTree = "<group>"; };
+		B20603E726A56B9500B19858 /* NSMutableArray+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Extensions.h"; sourceTree = "<group>"; };
+		B20603E826A56B9500B19858 /* NSMutableArray+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Extensions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +81,7 @@
 		B20603A426A3130800B19858 /* RSSchool_T8 */ = {
 			isa = PBXGroup;
 			children = (
+				B20603E326A5656200B19858 /* Models */,
 				B20603CD26A47BB800B19858 /* Views */,
 				B20603C926A31CAD00B19858 /* Controllers */,
 				B20603A526A3130800B19858 /* AppDelegate.h */,
@@ -127,8 +134,19 @@
 			children = (
 				B20603DD26A4AEE800B19858 /* UIColor+Palette.h */,
 				B20603DE26A4AEE800B19858 /* UIColor+Palette.m */,
+				B20603E726A56B9500B19858 /* NSMutableArray+Extensions.h */,
+				B20603E826A56B9500B19858 /* NSMutableArray+Extensions.m */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		B20603E326A5656200B19858 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B20603E426A5658C00B19858 /* RSDrawData.h */,
+				B20603E526A5658C00B19858 /* RSDrawData.m */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,7 +220,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B20603DB26A4A94A00B19858 /* PaletteViewController.m in Sources */,
+				B20603E926A56B9500B19858 /* NSMutableArray+Extensions.m in Sources */,
 				B20603DF26A4AEE800B19858 /* UIColor+Palette.m in Sources */,
+				B20603E626A5658C00B19858 /* RSDrawData.m in Sources */,
 				B20603D326A4801400B19858 /* RSCanvas.m in Sources */,
 				B20603A726A3130800B19858 /* AppDelegate.m in Sources */,
 				B20603E226A4CB6700B19858 /* RSPaletteButton.m in Sources */,
