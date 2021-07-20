@@ -7,11 +7,15 @@
 
 #import "RSCanvas.h"
 #import "UIColor+Palette.h"
+#import "RSSettings.h"
+#import "NSMutableArray+Extensions.h"
 
 @interface RSCanvas() {
 	NSTimer *drawTimer;
-	NSInteger drawProgress;
-	DrawCompleteBlock drawComplete;
+	NSInteger animationProgress;
+	NSInteger animationStep;
+	NSInteger animationEnd;
+	DrawCompleteBlock animationComplete;
 }
 
 @end
@@ -61,35 +65,62 @@
 	self.layer.shadowColor = UIColor.chillSky.CGColor;
 }
 
-- (void)resetView {
+- (void)clear {
+	[self stopAnimation];
 	self.layer.sublayers = nil;
 	[self setNeedsDisplay];
 }
 
-- (void)startAnimatedDrawWithDuration:(NSTimeInterval)duration complete:(DrawCompleteBlock)complete {
-	[self stopAnimatedDraw];
-	if (!self.drawData || !self.drawData.pathes.count) {
+- (void)animatedClearWithComplete:(DrawCompleteBlock)complete {
+	[self stopAnimation];
+	if (!self.layer.sublayers.count) {
+		// no draw data - exit
+		return;
+	}
+	// setup animation
+	animationComplete = complete;
+	animationProgress = 60;
+	animationStep = -1;
+	animationEnd = -1;
+	NSTimeInterval duration = 0.25;
+	
+	// start animation
+	drawTimer = [NSTimer scheduledTimerWithTimeInterval:duration/60.0 target:self selector:@selector(animation:) userInfo:nil repeats:YES];
+	
+}
+
+- (void)animatedDraw:(RSDrawData *)drawData complete:(DrawCompleteBlock)complete {
+	[self stopAnimation];
+	if (!drawData || !drawData.pathes.count) {
 		return;
 	}
 	
+	// init colors
+	UIColor *defaultColor = UIColor.blackColor;
+	NSMutableArray *_colorsSet = [NSMutableArray arrayWithArray:RSSettings.defaultSettings.drawColors];
+	while (_colorsSet.count < 3) {
+		[_colorsSet addObject:defaultColor];
+	}
+	[_colorsSet shuffle];
+	
 	// setup draw data
-	NSMutableArray *sublayers = [[NSMutableArray alloc] initWithCapacity: self.drawData.pathes.count];
+	NSMutableArray *sublayers = [[NSMutableArray alloc] initWithCapacity: drawData.pathes.count];
 	NSInteger colorIndex = 0;
-	for (RSDrawDataPath *path in self.drawData.pathes) {
+	for (RSDrawDataPath *path in drawData.pathes) {
 		if (path.bezier.empty) {
 			continue;
 		}
-		if (colorIndex >= self.drawColorsSet.count) {
+		if (colorIndex >= _colorsSet.count) {
 			colorIndex = 0;
 		}
-		UIColor *color = colorIndex < self.drawColorsSet.count ? self.drawColorsSet[colorIndex++] : UIColor.blackColor;
+		UIColor *color = colorIndex < _colorsSet.count ? _colorsSet[colorIndex++] : defaultColor;
 		
 		CAShapeLayer *bezier = [CAShapeLayer layer];
 		bezier.path = path.bezier.CGPath;
 
 		bezier.strokeColor = color.CGColor;
 		bezier.lineWidth   = path.lineWidth;
-		bezier.fillColor = path.needFill ? bezier.strokeColor : nil;
+		bezier.fillColor   = path.needFill ? bezier.strokeColor : nil;
 
 		bezier.strokeStart = 0.0;
 		bezier.strokeEnd   = 0.0;
@@ -98,31 +129,34 @@
 	}
 	self.layer.sublayers = sublayers;
 	
-	// setup progress
-	drawProgress = 0;
-	drawComplete = complete;
+	// setup animation
+	animationComplete = complete;
+	animationProgress = 0;
+	animationStep = 1;
+	animationEnd = 60;
+	NSTimeInterval duration = RSSettings.defaultSettings.drawDuration;
 	
-	// start draw
-	drawTimer = [NSTimer scheduledTimerWithTimeInterval:duration/60.0 target:self selector:@selector(animatedDraw:) userInfo:nil repeats:YES];
+	// start animation
+	drawTimer = [NSTimer scheduledTimerWithTimeInterval:duration/60.0 target:self selector:@selector(animation:) userInfo:nil repeats:YES];
 }
 
-- (void)stopAnimatedDraw {
+- (void)stopAnimation {
 	if (drawTimer) {
 		[drawTimer invalidate];
 		drawTimer = nil;
 	}
 }
 
-- (void)animatedDraw:(NSTimer *)timer {
-	drawProgress++;
-	if (drawProgress > 60) {
+- (void)animation:(NSTimer *)timer {
+	animationProgress += animationStep;
+	if (animationProgress == animationEnd) {
 		[timer invalidate];
-		if (drawComplete) {
-			drawComplete();
+		if (animationComplete) {
+			animationComplete();
 		}
 		return;
 	}
-	CGFloat strokeProgress = (CGFloat)drawProgress / 60.0;
+	CGFloat strokeProgress = (CGFloat)animationProgress / 60.0;
 	for (CAShapeLayer *subLayer in self.layer.sublayers) {
 		subLayer.strokeEnd = strokeProgress;
 	}

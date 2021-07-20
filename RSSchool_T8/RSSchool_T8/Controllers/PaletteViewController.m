@@ -7,7 +7,7 @@
 
 #import "PaletteViewController.h"
 #import "UIColor+Palette.h"
-#import "NSMutableArray+Extensions.h"
+#import "RSSettings.h"
 #import "RSActionButton.h"
 #import "RSPaletteButton.h"
 
@@ -103,6 +103,12 @@
 }
 
 - (void)saveButtonTapped:(UIButton *)sender {
+	NSMutableArray *_colorsSet = [NSMutableArray arrayWithCapacity:_pressedPaletteButtons.count];
+	for (RSPaletteButton *button in _pressedPaletteButtons) {
+		[_colorsSet addObject:button.color];
+	}
+	RSSettings.defaultSettings.drawColors = _colorsSet.copy;
+	
 	if (onSaveTarget && onSaveAction) {
 		IMP imp = [onSaveTarget methodForSelector:onSaveAction];
 		void (*func)(id, SEL) = (void *)imp;
@@ -150,17 +156,6 @@
 - (void)resetPaletteHighlighted {
 	self.view.backgroundColor = UIColor.whiteColor;
 	[self.view setNeedsDisplay];
-}
-
-- (NSArray*)colorsSet {
-	UIColor *defaultColor = UIColor.blackColor;
-	NSMutableArray *_colorsSet = [NSMutableArray arrayWithArray:@[defaultColor, defaultColor, defaultColor]];
-	NSInteger index = 0;
-	for (RSPaletteButton *button in _pressedPaletteButtons) {
-		_colorsSet[index++] = button.color;
-	}
-	[_colorsSet shuffle];
-	return _colorsSet.copy;
 }
 
 @end

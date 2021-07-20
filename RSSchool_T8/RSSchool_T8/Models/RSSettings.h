@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)defaultSettings;
 
 @property (atomic) NSTimeInterval drawDuration;
+@property (atomic, strong) NSArray* drawColors;
 
 @end
 

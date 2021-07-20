@@ -12,14 +12,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RSCanvas : UIView
 
-@property (nonatomic, weak) RSDrawData *drawData;
-@property (nonatomic, strong) NSArray *drawColorsSet;
-
 typedef void(^DrawCompleteBlock)(void);
-- (void)startAnimatedDrawWithDuration:(NSTimeInterval)duration complete:(DrawCompleteBlock)complete;
-- (void)stopAnimatedDraw;
 
-- (void)resetView;
+- (void)animatedDraw:(RSDrawData * _Nonnull)drawData complete:(DrawCompleteBlock _Nullable)complete;
+- (void)animatedClearWithComplete:(DrawCompleteBlock _Nullable)complete;
+- (void)stopAnimation;
+
+- (void)clear;
 
 - (NSData *)getPNG;
 

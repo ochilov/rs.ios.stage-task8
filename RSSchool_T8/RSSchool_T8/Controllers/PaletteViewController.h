@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PaletteViewController : UIViewController
 
 - (void)addOnSaveTarget:(nullable id)target action:(SEL)action;
-- (NSArray *)colorsSet;
 
 @end
 

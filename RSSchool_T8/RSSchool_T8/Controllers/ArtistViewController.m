@@ -143,7 +143,6 @@ typedef NS_ENUM(NSInteger, ArtistViewControllerStatus) {
 - (void)setStatus:(ArtistViewControllerStatus)status {
 	switch(status) {
 		case ArtistViewControllerIdle: {
-			[self.canvas resetView];
 			self.openPaletteButton.enabled = YES;
 			self.openTimerButton.enabled = YES;
 			self.drawButton.enabled = YES;
@@ -205,24 +204,24 @@ typedef NS_ENUM(NSInteger, ArtistViewControllerStatus) {
 
 // MARK: Draw
 - (void)drawButtonTapped:(UIButton *)sender {
-	self.canvas.drawData = [RSDrawData dataByID:self.drawingsViewController.selectedDataUID];
-	self.canvas.drawColorsSet = self.paletteViewController.colorsSet;
-	
 	[self setStatus:ArtistViewControllerDraw];
 	
-	NSTimeInterval drawDuration = RSSettings.defaultSettings.drawDuration;
+	RSDrawData *drawData = [RSDrawData dataByID:self.drawingsViewController.selectedDataUID];
 	__weak typeof(self) weakSelf = self;
-	[self.canvas startAnimatedDrawWithDuration: drawDuration complete:^{
-		[weakSelf drawDidEnd];
+	[self.canvas animatedDraw:drawData complete:^{
+		[weakSelf drawDidEnd:NO];
 	}];
 }
 
-- (void)drawDidEnd {
-	[self setStatus:ArtistViewControllerDone];
+- (void)resetDrawTapped:(UIButton *)sender {
+	__weak typeof(self) weakSelf = self;
+	[self.canvas animatedClearWithComplete:^{
+		[weakSelf drawDidEnd:YES];
+	}];
 }
 
-- (void)resetDrawTapped:(UIButton *)sender {
-	[self setStatus:ArtistViewControllerIdle];
+- (void)drawDidEnd:(BOOL)reset {
+	[self setStatus:(reset ? ArtistViewControllerIdle : ArtistViewControllerDone)];
 }
 
 // MARK: Share
