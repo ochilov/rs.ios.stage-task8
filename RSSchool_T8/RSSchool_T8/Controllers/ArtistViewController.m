@@ -7,6 +7,7 @@
 
 #import "ArtistViewController.h"
 #import "UIColor+Palette.h"
+#import "RSSettings.h"
 #import "RSCanvas.h"
 #import "RSActionButton.h"
 #import "PaletteViewController.h"
@@ -209,8 +210,9 @@ typedef NS_ENUM(NSInteger, ArtistViewControllerStatus) {
 	
 	[self setStatus:ArtistViewControllerDraw];
 	
+	NSTimeInterval drawDuration = RSSettings.defaultSettings.drawDuration;
 	__weak typeof(self) weakSelf = self;
-	[self.canvas startAnimatedDrawWithDuration: 1 complete:^{
+	[self.canvas startAnimatedDrawWithDuration: drawDuration complete:^{
 		[weakSelf drawDidEnd];
 	}];
 }

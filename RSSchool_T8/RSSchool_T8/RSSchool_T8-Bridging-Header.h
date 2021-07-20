@@ -5,3 +5,4 @@
 #import "UIColor+Palette.h"
 #import "RSActionButton.h"
 #import "RSDrawData.h"
+#import "RSSettings.h"
